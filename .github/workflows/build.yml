@@ -5,7 +5,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: unzip -o flrvisuals-1_5_0-src.zip -d project
+      - name: Unzip sources
+        run: |
+          ls -R | head -50
+          ZIP=$(find . -iname '*.zip' | head -1)
+          echo "Found: $ZIP"
+          unzip -o "$ZIP" -d project
       - uses: actions/setup-java@v4
         with: { distribution: temurin, java-version: 21 }
       - uses: gradle/actions/setup-gradle@v4
