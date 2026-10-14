@@ -5,10 +5,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: unzip -o flrvisuals-1_5_0-src.zip -d project
       - uses: actions/setup-java@v4
         with: { distribution: temurin, java-version: 21 }
       - uses: gradle/actions/setup-gradle@v4
-        with: { gradle-version: 8.10.2 }
+        with:
+          gradle-version: 8.10.2
+          build-root-directory: project
       - run: gradle build --no-daemon
+        working-directory: project
       - uses: actions/upload-artifact@v4
-        with: { name: flrvisuals, path: build/libs/*.jar }
+        with: { name: flrvisuals, path: project/build/libs/*.jar }
